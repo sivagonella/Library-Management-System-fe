@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext({
   isLoggedIn: false,
@@ -13,11 +13,12 @@ export default AuthContext;
 export const AuthProvider = (props) => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState("");
-  const [loggedIn, setLoggedIn, removeLoggedIn] = useCookies(["Auth"]);
+  // const [loggedIn, setLoggedIn, removeLoggedIn] = useCookies(["Auth"]);
 
   useEffect(() => {
-    setIsUserLoggedIn(loggedIn.Auth === "1");
-  }, [loggedIn]);
+    setIsUserLoggedIn(Cookies.get("isLoggedIn") === "1");
+    setUserRole(Cookies.get("userRole"));
+  }, []);
 
   const loginHandler = (email, password) => {
     fetch("http://localhost:8080/demo/getUser", {
@@ -33,7 +34,9 @@ export const AuthProvider = (props) => {
     }).then(async (res) => {
       let result = await res.json();
       if (result.isCorrectPassword === 1) {
-        setLoggedIn("Auth", 1, { path: "/" });
+        // setLoggedIn("Auth", 1, { path: "/" });
+        Cookies.set("isLoggedIn", "1");
+        Cookies.set("userRole", result.role);
         setUserRole(result.role);
         setIsUserLoggedIn(true);
       }
@@ -41,7 +44,8 @@ export const AuthProvider = (props) => {
   };
   const logoutHandler = () => {
     setIsUserLoggedIn(false);
-    removeLoggedIn("Auth");
+    Cookies.remove("isLoggedIn");
+    Cookies.remove("userRole");
   };
   return (
     <AuthContext.Provider
