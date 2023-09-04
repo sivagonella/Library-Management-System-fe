@@ -1,0 +1,17 @@
+.cart-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid gray;
+    padding: 10px;
+}
+
+.bookName {
+    font-weight: bold;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.actions Button{
+
+}

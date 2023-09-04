@@ -1,0 +1,25 @@
+.form {
+    width: 90%;
+    max-width: 40rem;
+    padding: 2rem;
+    margin: 2rem auto;
+}
+
+.actions {
+    text-align: center;
+}
+
+.btn {
+    font-weight: bold;
+    border: 2px solid gray;
+    padding: 0.5rem 1rem; 
+    cursor: pointer;
+    background-color: lightblue;
+    border-radius: 30px;
+    transition: opacity 0.15s;
+    margin-left: 5%;
+}
+
+.btn:hover {
+    opacity: 0.7;
+}

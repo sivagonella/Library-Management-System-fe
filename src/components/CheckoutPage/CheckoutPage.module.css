@@ -1,0 +1,23 @@
+.card {
+    width: 90%;
+    margin: 2rem auto;
+}
+
+.card h3 {
+    text-align: center;
+}
+
+.actions {
+    text-align: center;
+}
+
+.btn {
+    width: auto;
+    margin: 1rem auto;
+}
+
+ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
