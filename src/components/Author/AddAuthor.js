@@ -43,7 +43,7 @@ export default function AddAuthor() {
           type="text"
           id="bookName"
           value={bookName}
-          onChange={(value) => {
+          onChange={(id, value) => {
             setBookName(value);
           }}
         />
@@ -57,7 +57,7 @@ export default function AddAuthor() {
               label="Author name"
               className={`${classes.author}`}
               value={author.authorName}
-              onChange={(value) => {
+              onChange={(id, value) => {
                 let newAuthors = [...authors];
                 newAuthors[index].authorName = value;
                 setAuthors(newAuthors);
@@ -80,7 +80,7 @@ export default function AddAuthor() {
           className={classes.input}
           id="numberOfBooks"
           value={numberOfBooks}
-          onChange={(value) => setNumberOfBooks(value)}
+          onChange={(id, value) => setNumberOfBooks(value)}
         />
         <div style={{ textAlign: "center" }}>
           <Button type="submit" onClick={addBookHandler}>
