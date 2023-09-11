@@ -21,7 +21,7 @@ export default function BookTable() {
   const navigator = useNavigate();
   useEffect(() => {
     const fetchData = () => {
-      fetch("http://localhost:8080/demo/listBooks")
+      fetch("http://localhost:8080/demo/books")
         .then(async (res) => {
           const data = await res.json();
           setBookList(data);

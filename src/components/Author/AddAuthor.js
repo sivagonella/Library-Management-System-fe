@@ -14,7 +14,7 @@ export default function AddAuthor() {
   ]);
 
   const addBookHandler = () => {
-    fetch("http://localhost:8080/demo/addBook", {
+    fetch("http://localhost:8080/demo/books", {
       method: "POST",
       headers: {
         Accept: "application/json",
