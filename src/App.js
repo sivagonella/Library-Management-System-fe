@@ -1,13 +1,14 @@
 import "./App.css";
-import BookTable from "./components/BookTable/BookTable";
+import BookTable from "./components/Book/BookTable";
 import Navbar from "./components/Navbar/Navbar";
-import AddAuthor from "./components/Author/AddAuthor";
+import AddBook from "./components/Book/AddBook";
 import CheckoutPage from "./components/CheckoutPage/CheckoutPage";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Signup from "./components/Login/Signup";
 import { useContext } from "react";
 import AuthContext from "./context/auth-context";
+import AddAuthor from "./components/Author/AddAuthor";
 
 function App() {
   const authContext = useContext(AuthContext);
@@ -29,6 +30,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<BookTable />} />
+        <Route path="/addBook" element={<AddBook />} />
         <Route path="/addAuthor" element={<AddAuthor />} />
         <Route path="/showBooks" element={<BookTable />} />
         <Route path="/checkout" element={<CheckoutPage />} />

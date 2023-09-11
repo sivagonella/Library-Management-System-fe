@@ -1,0 +1,33 @@
+.card {
+    max-width: 60%;
+    margin: 2rem auto;
+}
+
+.input {
+    margin: auto 2rem;
+}
+
+h3 {
+    text-align: center;
+    padding: 10px;
+    text-decoration: underline;
+}
+
+.author-div {
+    display: flex;
+    flex-direction: row;
+    margin: auto 2rem;
+    align-items: center;
+}
+.author {
+    flex: 12;
+}
+.add-author {
+    flex: 0.1;
+    margin: 0;
+    margin-left: 5px;
+    height: 100%;
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

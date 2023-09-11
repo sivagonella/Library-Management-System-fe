@@ -1,36 +1,35 @@
-import React, { useState } from "react";
+import { Card } from "react-bootstrap";
 import classes from "./AddAuthor.module.css";
-import Button from "../UI/Button";
-import Card from "../UI/Card";
 import Input from "../UI/Input";
+import { useState } from "react";
+import TextArea from "../UI/TextArea";
+import Button from "../UI/Button";
 
-export default function AddAuthor() {
-  const [bookName, setBookName] = useState("");
-  const [numberOfBooks, setNumberOfBooks] = useState();
-  const [authors, setAuthors] = useState([
-    {
-      authorName: "",
-    },
-  ]);
+const AddAuthor = () => {
+  const [author, setAuthor] = useState({
+    name: "",
+    email: "",
+    bio: "",
+  });
 
-  const addBookHandler = () => {
-    fetch("http://localhost:8080/demo/books", {
+  const addAuthorHandler = async () => {
+    const response = await fetch("http://localhost:8080/demo/authors", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        bookName: bookName,
-        authorNames: authors,
-        numberOfBooks: numberOfBooks,
-      }),
-    }).then(async (res) => {
-      console.log(await res.json());
+      body: JSON.stringify(author),
     });
-    setBookName("");
-    setAuthors([{ authorName: "" }]);
-    setNumberOfBooks(0);
+    const responseData = await response.json();
+    if (responseData) {
+      window.alert("Author added successfully");
+    }
+    setAuthor({
+      name: "",
+      email: "",
+      bio: "",
+    });
   };
 
   return (
@@ -39,59 +38,47 @@ export default function AddAuthor() {
         <h3>Add Author</h3>
         <Input
           className={classes.input}
-          label="Book name"
+          label="Author name"
           type="text"
-          id="bookName"
-          value={bookName}
-          onChange={(id, value) => {
-            setBookName(value);
-          }}
+          id="name"
+          value={author.name}
+          onChange={(id, value) =>
+            setAuthor((state) => {
+              return { ...state, [id]: value };
+            })
+          }
         />
-        <br></br>
-        {authors.map((author, index) => (
-          <div className={classes["author-div"]}>
-            <Input
-              type="text"
-              key={index}
-              id="authorNames"
-              label="Author name"
-              className={`${classes.author}`}
-              value={author.authorName}
-              onChange={(id, value) => {
-                let newAuthors = [...authors];
-                newAuthors[index].authorName = value;
-                setAuthors(newAuthors);
-              }}
-            />
-            <Button
-              id="addAuthorButton"
-              className={classes["add-author"]}
-              onClick={addAuthor}
-            >
-              +
-            </Button>
-          </div>
-        ))}
-
-        <br></br>
         <Input
-          type="number"
-          label="Number of books"
           className={classes.input}
-          id="numberOfBooks"
-          value={numberOfBooks}
-          onChange={(id, value) => setNumberOfBooks(value)}
+          label="Author email"
+          type="email"
+          id="email"
+          value={author.email}
+          onChange={(id, value) =>
+            setAuthor((state) => {
+              return { ...state, [id]: value };
+            })
+          }
+        />
+        <TextArea
+          className={classes.input}
+          id="bio"
+          label="Author bio"
+          value={author.bio}
+          onChange={(id, value) =>
+            setAuthor((state) => {
+              return { ...state, [id]: value };
+            })
+          }
         />
         <div style={{ textAlign: "center" }}>
-          <Button type="submit" onClick={addBookHandler}>
-            Add book
+          <Button type="submit" onClick={addAuthorHandler}>
+            Add author
           </Button>
         </div>
       </form>
     </Card>
   );
+};
 
-  function addAuthor() {
-    setAuthors([...authors, { authorName: "" }]);
-  }
-}
+export default AddAuthor;

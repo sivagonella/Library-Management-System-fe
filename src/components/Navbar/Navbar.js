@@ -18,6 +18,14 @@ function Navbar() {
           <div className={classes["navbar-item"]}>Add author</div>
         </NavLink>
       )}
+      {authContext.userRole === "ADMIN" && (
+        <NavLink
+          to="/addBook"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <div className={classes["navbar-item"]}>Add book</div>
+        </NavLink>
+      )}
       <NavLink
         to="/showBooks"
         style={{ textDecoration: "none", color: "black" }}
