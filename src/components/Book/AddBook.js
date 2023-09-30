@@ -44,7 +44,7 @@ export default function AddBook() {
         quantity: numberOfBooks,
       }),
     }).then(async (res) => {
-      console.log(await res.json());
+      // console.log(await res.json());
     });
     setBookName("");
     setAuthors([{ authorName: "" }]);

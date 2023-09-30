@@ -24,7 +24,7 @@ export default function BookTable() {
       fetch("http://localhost:8080/lms/books")
         .then(async (res) => {
           const data = await res.json();
-          console.log(data);
+          // console.log(data);
           setBookList(data);
         })
         .catch((err) => {
@@ -35,10 +35,10 @@ export default function BookTable() {
   }, []);
 
   const bookNumberChangeHandler = (value, book) => {
-    if (value) {
+    if (+value <= book.quantity) {
       cartContext.addBook({
         ...book,
-        quantity: +value,
+        selectedQuantity: +value,
       });
     }
   };
@@ -92,7 +92,9 @@ export default function BookTable() {
                     <BookInput
                       id={book.id}
                       book={book}
-                      onBlur={bookNumberChangeHandler}
+                      value={cartContext.findBookQuantity(book.id)}
+                      onChange={bookNumberChangeHandler}
+                      // onBlur={bookNumberChangeHandler}
                       numOfBooks={book.quantity}
                     />
                   </StyledTableCell>

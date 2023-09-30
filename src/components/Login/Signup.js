@@ -34,7 +34,7 @@ const Signup = () => {
         userPassword: userSignupState.password,
       }),
     }).then(async (res) => {
-      console.log(await res.json());
+      // console.log(await res.json());
     });
     setUserSignupState({
       firstName: "",

@@ -7,16 +7,22 @@ import CartContext from "../../context/cart-context";
 const CheckedBook = (props) => {
   const cartContext = useContext(CartContext);
   const decrementBookHandler = () => {
-    const quantity = props.bookItem.quantity;
-    if (quantity > 1) {
-      cartContext.addBook({ ...props.bookItem, quantity: quantity - 1 });
+    const selectedQuantity = props.bookItem.selectedQuantity;
+    if (selectedQuantity > 1) {
+      cartContext.addBook({
+        ...props.bookItem,
+        selectedQuantity: selectedQuantity - 1,
+      });
     } else {
-      cartContext.removeBook(props.bookItem.bookID);
+      cartContext.removeBook(props.bookItem.id);
     }
   };
   const incrementBookHandler = () => {
-    const quantity = props.bookItem.quantity;
-    cartContext.addBook({ ...props.bookItem, quantity: quantity + 1 });
+    const selectedQuantity = props.bookItem.selectedQuantity;
+    cartContext.addBook({
+      ...props.bookItem,
+      selectedQuantity: selectedQuantity + 1,
+    });
   };
   return (
     <li className={classes["cart-item"]}>
@@ -38,7 +44,7 @@ const CheckedBook = (props) => {
         <Button type="button" onClick={decrementBookHandler}>
           -
         </Button>
-        <strong>{props.bookItem.quantity}</strong>
+        <strong>{props.bookItem.selectedQuantity}</strong>
         <Button type="button" onClick={incrementBookHandler}>
           +
         </Button>

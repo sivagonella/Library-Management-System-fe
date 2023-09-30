@@ -8,6 +8,7 @@ import Button from "../UI/Button";
 function CheckoutPage() {
   const cartContext = useContext(CartContext);
   const checkoutBooksHandler = () => {};
+  // console.log(cartContext.bookList);
   return (
     <Card className={classes.card}>
       <h3>Selected Books</h3>
