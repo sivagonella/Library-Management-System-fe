@@ -2,12 +2,13 @@ import React, { useContext } from "react";
 import AuthContext from "../../context/auth-context";
 import classes from "./Navbar.module.css";
 import Button from "../UI/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 // import CartContext from "../../context/cart-context";
 
 function Navbar() {
   const authContext = useContext(AuthContext);
   // const cartContext = useContext(CartContext);
+  const navigate = useNavigate();
   const NavbarLinks = (
     <div>
       {authContext.userRole === "ADMIN" && (
@@ -26,10 +27,7 @@ function Navbar() {
           <div className={classes["navbar-item"]}>Add book</div>
         </NavLink>
       )}
-      <NavLink
-        to="/showBooks"
-        style={{ textDecoration: "none", color: "black" }}
-      >
+      <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>
         <div className={classes["navbar-item"]}>Book list</div>
       </NavLink>
       <NavLink
@@ -44,7 +42,10 @@ function Navbar() {
       <Button
         className={classes.btn}
         type="button"
-        onClick={authContext.onLogout}
+        onClick={() => {
+          authContext.onLogout();
+          navigate("/login");
+        }}
       >
         Logout
       </Button>

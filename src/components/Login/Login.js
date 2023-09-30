@@ -27,6 +27,9 @@ const Login = () => {
   const loginSubmitHandler = (event) => {
     event.preventDefault();
     authContext.onLogin(userLoginState.email, userLoginState.password);
+    if (authContext.isLoggedIn) {
+      navigate("/");
+    }
   };
 
   return (
