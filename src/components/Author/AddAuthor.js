@@ -13,7 +13,7 @@ const AddAuthor = () => {
   });
 
   const addAuthorHandler = async () => {
-    const response = await fetch("http://localhost:8080/demo/authors", {
+    const response = await fetch("http://localhost:8080/lms/authors", {
       method: "POST",
       headers: {
         Accept: "application/json",

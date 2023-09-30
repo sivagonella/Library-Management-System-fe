@@ -2,7 +2,6 @@
     display: flex;
     align-items: stretch;
     flex-direction: row;
-    margin: 1rem 0;
 }
 
 .input label,

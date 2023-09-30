@@ -21,7 +21,7 @@ const Signup = () => {
 
   const signupSubmitHandler = (event) => {
     event.preventDefault();
-    fetch("http://localhost:8080/demo/addNewUser", {
+    fetch("http://localhost:8080/lms/addNewUser", {
       method: "POST",
       headers: {
         Accept: "application/json",

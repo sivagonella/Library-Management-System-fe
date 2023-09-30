@@ -2,7 +2,7 @@ import classes from "./TextArea.module.css"
 
 const TextArea = (props) => {
   return (
-    <div className={`${classes.input} ${props.className}`}>
+    <div className={`${props.className} ${classes.input}`}>
       <label htmlFor={props.htmlFor}>{props.label}</label>
       <textarea
         id={props.id}

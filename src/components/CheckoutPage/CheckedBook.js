@@ -21,14 +21,14 @@ const CheckedBook = (props) => {
   return (
     <li className={classes["cart-item"]}>
       <div className={classes.bookDescription}>
-        <span className={classes.bookName}>{props.bookItem.bookName}</span>
+        <span className={classes.bookName}>{props.bookItem.name}</span>
         <div>
-          {props.bookItem.authorNames.map((author) => {
+          {props.bookItem.authors.map((author) => {
             return (
               <Chip
                 style={{ marginRight: "5px" }}
-                key={author.authorID}
-                label={author.authorName}
+                key={author.id}
+                label={author.name}
               />
             );
           })}

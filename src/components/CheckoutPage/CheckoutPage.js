@@ -13,7 +13,7 @@ function CheckoutPage() {
       <h3>Selected Books</h3>
       <ul>
         {cartContext.bookList.map((book) => {
-          return <CheckedBook key={book.bookID} bookItem={book} />;
+          return <CheckedBook key={book.id} bookItem={book} />;
         })}
       </ul>
       <div className={classes.actions}>

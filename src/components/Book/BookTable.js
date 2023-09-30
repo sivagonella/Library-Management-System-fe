@@ -21,9 +21,10 @@ export default function BookTable() {
   const navigator = useNavigate();
   useEffect(() => {
     const fetchData = () => {
-      fetch("http://localhost:8080/demo/books")
+      fetch("http://localhost:8080/lms/books")
         .then(async (res) => {
           const data = await res.json();
+          console.log(data);
           setBookList(data);
         })
         .catch((err) => {
@@ -47,12 +48,16 @@ export default function BookTable() {
       <h2 style={{ margin: "10px", display: "flex", justifyContent: "center" }}>
         List of available books
       </h2>
-      <div style={{ padding: "10px", width: '90%', margin: 'auto' }}>
+      <div style={{ padding: "10px", width: "90%", margin: "auto" }}>
         <TableContainer
           className={classes["table-container"]}
           component={Paper}
         >
-          <Table sx={{ minWidth: 700 }} style={{height: '100px', overflowY: 'scroll'}} aria-label="customized table">
+          <Table
+            sx={{ minWidth: 700 }}
+            style={{ height: "100px", overflowY: "scroll" }}
+            aria-label="customized table"
+          >
             <TableHead style={{ position: "sticky", top: 0 }}>
               <TableRow>
                 <StyledTableCell>Book name</StyledTableCell>
@@ -66,31 +71,29 @@ export default function BookTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {bookList.map((row) => (
-                <StyledTableRow key={row.bookID}>
+              {bookList.map((book) => (
+                <StyledTableRow key={book.id}>
                   <StyledTableCell component="th" scope="row">
-                    {row.bookName}
+                    {book.name}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {row.authorNames.map((author) => {
-                      return (
-                        <Chip
-                          style={{ marginRight: "5px" }}
-                          key={author.authorID}
-                          label={author.authorName}
-                        />
-                      );
-                    })}
+                    {book.authors.map((author) => (
+                      <Chip
+                        key={author.id}
+                        style={{ marginRight: "5px" }}
+                        label={author.name}
+                      />
+                    ))}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {row.numberOfBooks}
+                    {book.quantity}
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <BookInput
-                      id={row.bookID}
-                      book={row}
+                      id={book.id}
+                      book={book}
                       onBlur={bookNumberChangeHandler}
-                      numOfBooks={row.numberOfBooks}
+                      numOfBooks={book.quantity}
                     />
                   </StyledTableCell>
                 </StyledTableRow>

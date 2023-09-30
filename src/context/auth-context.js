@@ -21,7 +21,7 @@ export const AuthProvider = (props) => {
   }, []);
 
   const loginHandler = (email, password) => {
-    fetch("http://localhost:8080/demo/users/email=" + email, {
+    fetch("http://localhost:8080/lms/users/email=" + email, {
       method: "POST",
       headers: {
         Accept: "application/json",
