@@ -38,6 +38,7 @@ export const AuthProvider = (props) => {
         // setLoggedIn("Auth", 1, { path: "/" });
         Cookies.set("isLoggedIn", "1");
         Cookies.set("userRole", result.role);
+        Cookies.set("userId", result.id);
         setUserRole(result.role);
         setIsUserLoggedIn(true);
       }
@@ -47,6 +48,7 @@ export const AuthProvider = (props) => {
     setIsUserLoggedIn(false);
     Cookies.remove("isLoggedIn");
     Cookies.remove("userRole");
+    Cookies.remove("userId");
   };
   return (
     <AuthContext.Provider
