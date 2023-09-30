@@ -3,6 +3,7 @@ import classes from "./AddBook.module.css";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
 import Input from "../UI/Input";
+import Select from "react-select";
 
 export default function AddBook() {
   const [bookName, setBookName] = useState("");
@@ -13,11 +14,19 @@ export default function AddBook() {
   //   },
   // ]);
   const [authors, setAuthors] = useState([]);
+  const [selectedAuthors, setSelectedAuthors] = useState();
 
   useEffect(() => {
     const fetchData = () =>
       fetch("http://localhost:8080/lms/authors").then(async (res) => {
-        console.log(await res.json());
+        // console.log(await res.json());
+        const authorData = await res.json();
+        authorData.map((author) =>
+          setAuthors((state) => [
+            ...state,
+            { id: author.id, label: author.name, value: author.id },
+          ])
+        );
       });
     fetchData();
   }, []);
@@ -30,9 +39,9 @@ export default function AddBook() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        bookName: bookName,
-        authorNames: authors,
-        numberOfBooks: numberOfBooks,
+        name: bookName,
+        authorIds: selectedAuthors,
+        quantity: numberOfBooks,
       }),
     }).then(async (res) => {
       console.log(await res.json());
@@ -56,9 +65,20 @@ export default function AddBook() {
             setBookName(value);
           }}
         />
-        <br></br>
-
-        <br></br>
+        <div className={`${classes.select} ${classes.input}`}>
+          <label>Author names</label>
+          <Select
+            isMulti
+            name="authors"
+            options={authors}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={(events) => {
+              // console.log(events.map((event) => event.id));
+              setSelectedAuthors(events.map((event) => event.id));
+            }}
+          />
+        </div>
         <Input
           type="number"
           label="Number of books"
