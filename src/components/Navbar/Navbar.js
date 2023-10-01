@@ -28,6 +28,12 @@ function Navbar() {
         </NavLink>
       )}
       <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>
+        <div className={classes["navbar-item"]}>Home</div>
+      </NavLink>
+      <NavLink
+        to="/showBooks"
+        style={{ textDecoration: "none", color: "black" }}
+      >
         <div className={classes["navbar-item"]}>Book list</div>
       </NavLink>
       <NavLink

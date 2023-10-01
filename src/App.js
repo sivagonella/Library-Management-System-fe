@@ -11,6 +11,7 @@ import Signup from "./components/Login/Signup";
 import AddAuthor from "./components/Author/AddAuthor";
 import ProtectedUserRoutes from "./components/ProtectedRoutes/ProtectedUserRoutes";
 import ProtectedAdminRoutes from "./components/ProtectedRoutes/ProtectedAdminRoutes";
+import LandingPage from "./components/Landing/LandingPage";
 
 function App() {
   // const authContext = useContext(AuthContext);
@@ -48,11 +49,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route element={<ProtectedUserRoutes />}>
-          <Route path="/" element={<BookTable />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/showBooks" element={<BookTable />} />
           <Route path="/checkout" element={<CheckoutPage />} />
         </Route>
         <Route element={<ProtectedAdminRoutes />}>
-          <Route path="/" element={<BookTable />} />
+          <Route path="/showBooks" element={<BookTable />} />
           <Route path="/addBook" element={<AddBook />} />
           <Route path="/addAuthor" element={<AddAuthor />} />
         </Route>
