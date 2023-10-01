@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { createContext, useState } from "react";
 
 const CartContext = createContext({
@@ -37,7 +38,33 @@ export const CartProvider = (props) => {
     setCartState(updatedBooks);
     setTotalBooks(totalBooks - 1);
   };
-  const checkoutBooksHandler = () => {};
+  const checkoutBooksHandler = () => {
+    const bookIds = cartState.map((book) => book.id);
+    const borrowedQuantity = cartState.map((book) => book.selectedQuantity);
+    console.log(new Date());
+
+    // const requestBody = {
+    //   userId: Cookies.get("userId"),
+    //   bookIds: bookIds,
+    //   borrowedQuantity: borrowedQuantity,
+    //   borrowedStatus: "BORROWED",
+    // };
+    // console.log(requestBody);
+    fetch("http://localhost:8080/lms/checkout", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: Cookies.get("userId"),
+        bookIds: bookIds,
+        borrowedQuantities: borrowedQuantity,
+        borrowedStatus: "BORROWED",
+        borrowedDate: new Date(),
+      }),
+    }).then((res) => console.log(res.body));
+  };
 
   const findBookQuantityHandler = (id) => {
     const bookIndex = cartState.findIndex((book) => book.id === id);
