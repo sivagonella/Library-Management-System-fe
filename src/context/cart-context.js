@@ -61,7 +61,6 @@ export const CartProvider = (props) => {
         bookIds: bookIds,
         borrowedQuantities: borrowedQuantity,
         borrowedStatus: "BORROWED",
-        borrowedDate: new Date(),
       }),
     }).then((res) => console.log(res.body));
   };
