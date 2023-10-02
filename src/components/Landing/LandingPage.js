@@ -19,30 +19,36 @@ const LandingPage = () => {
   return (
     <div>
       <table>
-        <tr>
-          <th>Book Name</th>
-          <th>Author Names</th>
-          <th>Borrowed Quantity</th>
-          <th>Borrowed Date</th>
-          <th>Return Date</th>
-        </tr>
-        {borrowedBooks.map((bookDetail) => {
-          return (
-            <tr key={bookDetail.libraryBook.id}>
-              <td>{bookDetail.libraryBook.name}</td>
-              {bookDetail.libraryBook.authors.map((author) => (
-                <Chip
-                  key={author.id}
-                  style={{ marginRight: "5px" }}
-                  label={author.name}
-                />
-              ))}
-              <td>{bookDetail.quantity}</td>
-              <td>{bookDetail.borrowedDate}</td>
-              <td>{bookDetail.returnDate}</td>
-            </tr>
-          );
-        })}
+        <thead>
+          <tr>
+            <th>Book Name</th>
+            <th>Author Names</th>
+            <th>Borrowed Quantity</th>
+            <th>Borrowed Date</th>
+            <th>Return Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {borrowedBooks.map((bookDetail) => {
+            return (
+              <tr key={bookDetail.libraryBook.id}>
+                <td>{bookDetail.libraryBook.name}</td>
+                <td>
+                  {bookDetail.libraryBook.authors.map((author) => (
+                    <Chip
+                      key={author.id}
+                      style={{ marginRight: "5px" }}
+                      label={author.name}
+                    />
+                  ))}
+                </td>
+                <td>{bookDetail.quantity}</td>
+                <td>{bookDetail.borrowedDate}</td>
+                <td>{bookDetail.returnDate}</td>
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
     </div>
   );
