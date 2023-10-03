@@ -14,9 +14,12 @@ import BookInput from "./BookInput";
 import classes from "./BookTable.module.css";
 import CartContext from "../../context/cart-context";
 import { useNavigate } from "react-router-dom";
+import Input from "../UI/Input";
 
 export default function BookTable() {
   const [bookList, setBookList] = useState([]);
+  const [filteredBookList, setFilteredBookList] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
   const cartContext = React.useContext(CartContext);
   const navigator = useNavigate();
   useEffect(() => {
@@ -26,6 +29,7 @@ export default function BookTable() {
           const data = await res.json();
           // console.log(data);
           setBookList(data);
+          setFilteredBookList(data);
         })
         .catch((err) => {
           console.log(err.message);
@@ -43,12 +47,28 @@ export default function BookTable() {
     }
   };
 
+  const searchInputChangeHandler = (value) => {
+    const searchedBookList = bookList.filter((book) =>
+      book.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredBookList(searchedBookList);
+    setSearchInput(value);
+  };
+
   return (
     <>
       <h2 style={{ margin: "10px", display: "flex", justifyContent: "center" }}>
         List of available books
       </h2>
       <div style={{ padding: "10px", width: "90%", margin: "auto" }}>
+        <Input
+          label="Search"
+          placeholder="Enter the name of the book"
+          id="searchBook"
+          type="text"
+          value={searchInput}
+          onChange={(id, value) => searchInputChangeHandler(value)}
+        />
         <TableContainer
           className={classes["table-container"]}
           component={Paper}
@@ -71,7 +91,7 @@ export default function BookTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {bookList.map((book) => (
+              {filteredBookList.map((book) => (
                 <StyledTableRow key={book.id}>
                   <StyledTableCell component="th" scope="row">
                     {book.name}
