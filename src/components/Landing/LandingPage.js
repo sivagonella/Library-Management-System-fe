@@ -101,7 +101,12 @@ const LandingPage = () => {
         </tbody>
       </table>
       <div className={classes.action}>
-        <Button onClick={returnBookHandler}>Return</Button>
+        <Button
+          onClick={returnBookHandler}
+          disabled={borrowedBooks.length === 0}
+        >
+          Return
+        </Button>
       </div>
     </Card>
   );
