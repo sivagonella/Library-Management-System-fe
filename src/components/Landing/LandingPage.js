@@ -1,7 +1,9 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-// import classes from "./LandingPage.module.css";
+import classes from "./LandingPage.module.css";
 import { Chip } from "@mui/material";
+// import styled from "styled-components";
+import { Card } from "react-bootstrap";
 
 const LandingPage = () => {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
@@ -17,7 +19,7 @@ const LandingPage = () => {
   }, [userId]);
 
   return (
-    <div>
+    <Card className={classes.card}>
       <table>
         <thead>
           <tr>
@@ -50,7 +52,7 @@ const LandingPage = () => {
           })}
         </tbody>
       </table>
-    </div>
+    </Card>
   );
 };
 
