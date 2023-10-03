@@ -95,7 +95,7 @@ export default function BookTable() {
                       value={cartContext.findBookQuantity(book.id)}
                       onChange={bookNumberChangeHandler}
                       // onBlur={bookNumberChangeHandler}
-                      numOfBooks={book.quantity}
+                      max={book.quantity}
                     />
                   </StyledTableCell>
                 </StyledTableRow>

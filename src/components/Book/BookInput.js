@@ -15,7 +15,7 @@ const BookInput = (props) => {
         type="number"
         min="0"
         value={props.value}
-        max={props.numOfBooks}
+        max={props.max}
         step={1}
         onChange={(event) => props.onChange(event.target.value, props.book)}
         // onBlur={(event) => {
