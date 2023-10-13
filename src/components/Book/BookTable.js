@@ -53,16 +53,17 @@ export default function BookTable() {
   };
 
   const searchInputChangeHandler = (value) => {
+    setSearchInput(value);
     const searchedBookList = bookList.filter((book) =>
       book.name.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredBookList(searchedBookList);
-    setSearchInput(value);
   };
 
   const pageChangeHandler = (pageNumber) => {
-    setActivePage(pageNumber);
+    setActivePage(+pageNumber);
     pageNumber = +pageNumber - 1;
+    console.log("page number:" + pageNumber);
     const pageSize = 10;
     const fetchData = () => {
       fetch(
@@ -72,8 +73,9 @@ export default function BookTable() {
           const data = await res.json();
           // console.log(data);
           setBookList(data.libraryBooks);
-          searchInputChangeHandler(searchInput);
+          setFilteredBookList(data.libraryBooks);
           setTotalItemsCount(data.totalElements);
+          setSearchInput("");
         })
         .catch((err) => {
           console.log(err.message);
