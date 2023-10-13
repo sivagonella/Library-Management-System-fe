@@ -72,7 +72,7 @@ export default function BookTable() {
           const data = await res.json();
           // console.log(data);
           setBookList(data.libraryBooks);
-          setFilteredBookList(data.libraryBooks);
+          searchInputChangeHandler(searchInput);
           setTotalItemsCount(data.totalElements);
         })
         .catch((err) => {
@@ -118,35 +118,39 @@ export default function BookTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredBookList.map((book) => (
-                <StyledTableRow key={book.id}>
-                  <StyledTableCell component="th" scope="row">
-                    {book.name}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {book.authors.map((author) => (
-                      <Chip
-                        key={author.id}
-                        style={{ marginRight: "5px" }}
-                        label={author.name}
+              {filteredBookList.length === 0 ? (
+                <p style={{ textAlign: "center" }}>No books available</p>
+              ) : (
+                filteredBookList.map((book) => (
+                  <StyledTableRow key={book.id}>
+                    <StyledTableCell component="th" scope="row">
+                      {book.name}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {book.authors.map((author) => (
+                        <Chip
+                          key={author.id}
+                          style={{ marginRight: "5px" }}
+                          label={author.name}
+                        />
+                      ))}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {book.quantity}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <BookInput
+                        id={book.id}
+                        book={book}
+                        value={cartContext.findBookQuantity(book.id)}
+                        onChange={bookNumberChangeHandler}
+                        // onBlur={bookNumberChangeHandler}
+                        max={book.quantity}
                       />
-                    ))}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {book.quantity}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    <BookInput
-                      id={book.id}
-                      book={book}
-                      value={cartContext.findBookQuantity(book.id)}
-                      onChange={bookNumberChangeHandler}
-                      // onBlur={bookNumberChangeHandler}
-                      max={book.quantity}
-                    />
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </TableContainer>
