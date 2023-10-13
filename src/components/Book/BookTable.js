@@ -25,6 +25,7 @@ export default function BookTable() {
   const [searchInput, setSearchInput] = useState("");
   const cartContext = React.useContext(CartContext);
   const navigator = useNavigate();
+
   useEffect(() => {
     const fetchData = () => {
       fetch("http://localhost:8080/lms/books")
@@ -62,9 +63,10 @@ export default function BookTable() {
   const pageChangeHandler = (pageNumber) => {
     setActivePage(pageNumber);
     pageNumber = +pageNumber - 1;
+    const pageSize = 10;
     const fetchData = () => {
       fetch(
-        "http://localhost:8080/lms/books?pageNo=" + pageNumber + "&pageSize=10"
+        `http://localhost:8080/lms/books?pageNo=${pageNumber}&pageSize=${pageSize}`
       )
         .then(async (res) => {
           const data = await res.json();
