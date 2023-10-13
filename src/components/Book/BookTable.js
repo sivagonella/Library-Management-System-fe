@@ -15,10 +15,13 @@ import classes from "./BookTable.module.css";
 import CartContext from "../../context/cart-context";
 import { useNavigate } from "react-router-dom";
 import Input from "../UI/Input";
+import Pagination from "react-js-pagination";
 
 export default function BookTable() {
   const [bookList, setBookList] = useState([]);
   const [filteredBookList, setFilteredBookList] = useState([]);
+  const [activePage, setActivePage] = useState(0);
+  const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const cartContext = React.useContext(CartContext);
   const navigator = useNavigate();
@@ -28,8 +31,9 @@ export default function BookTable() {
         .then(async (res) => {
           const data = await res.json();
           // console.log(data);
-          setBookList(data);
-          setFilteredBookList(data);
+          setBookList(data.libraryBooks);
+          setFilteredBookList(data.libraryBooks);
+          setTotalItemsCount(data.totalElements);
         })
         .catch((err) => {
           console.log(err.message);
@@ -53,6 +57,27 @@ export default function BookTable() {
     );
     setFilteredBookList(searchedBookList);
     setSearchInput(value);
+  };
+
+  const pageChangeHandler = (pageNumber) => {
+    setActivePage(pageNumber);
+    pageNumber = +pageNumber - 1;
+    const fetchData = () => {
+      fetch(
+        "http://localhost:8080/lms/books?pageNo=" + pageNumber + "&pageSize=10"
+      )
+        .then(async (res) => {
+          const data = await res.json();
+          // console.log(data);
+          setBookList(data.libraryBooks);
+          setFilteredBookList(data.libraryBooks);
+          setTotalItemsCount(data.totalElements);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    };
+    fetchData();
   };
 
   return (
@@ -123,6 +148,13 @@ export default function BookTable() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Pagination
+          activePage={activePage}
+          itemsCountPerPage={10}
+          totalItemsCount={totalItemsCount}
+          pageRangeDisplayed={5}
+          onChange={pageChangeHandler}
+        />
       </div>
       <div
         className="addBooksToCheckout"
