@@ -16,15 +16,18 @@ import CartContext from "../../context/cart-context";
 import { useNavigate } from "react-router-dom";
 import Input from "../UI/Input";
 import Pagination from "react-js-pagination";
+import { useDispatch, useSelector } from "react-redux";
+import bookStoreSlice from "../../store/bookStore-slice";
 
 export default function BookTable() {
-  const [bookList, setBookList] = useState([]);
-  const [filteredBookList, setFilteredBookList] = useState([]);
   const [activePage, setActivePage] = useState(0);
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const cartContext = React.useContext(CartContext);
   const navigator = useNavigate();
+
+  const dispatch = useDispatch();
+  const filteredBooks = useSelector(bookStoreSlice.selectors.getFilteredBooks);
 
   useEffect(() => {
     const fetchData = () => {
@@ -32,16 +35,18 @@ export default function BookTable() {
         .then(async (res) => {
           const data = await res.json();
           // console.log(data);
-          setBookList(data.libraryBooks);
-          setFilteredBookList(data.libraryBooks);
+          dispatch(bookStoreSlice.actions.initialize(data.libraryBooks));
           setTotalItemsCount(data.totalElements);
+          // setBookList(data.libraryBooks);
+          // setFilteredBookList(data.libraryBooks);
+          // setTotalItemsCount(data.totalElements);
         })
         .catch((err) => {
           console.log(err.message);
         });
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   const bookNumberChangeHandler = (value, book) => {
     if (+value <= book.quantity) {
@@ -54,10 +59,7 @@ export default function BookTable() {
 
   const searchInputChangeHandler = (value) => {
     setSearchInput(value);
-    const searchedBookList = bookList.filter((book) =>
-      book.name.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredBookList(searchedBookList);
+    dispatch(bookStoreSlice.actions.filterBooks(value));
   };
 
   const pageChangeHandler = (pageNumber) => {
@@ -72,8 +74,9 @@ export default function BookTable() {
         .then(async (res) => {
           const data = await res.json();
           // console.log(data);
-          setBookList(data.libraryBooks);
-          setFilteredBookList(data.libraryBooks);
+          // setBookList(data.libraryBooks);
+          // setFilteredBookList(data.libraryBooks);
+          dispatch(bookStoreSlice.actions.initialize(data.libraryBooks));
           setTotalItemsCount(data.totalElements);
           setSearchInput("");
         })
@@ -120,10 +123,10 @@ export default function BookTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredBookList.length === 0 ? (
+              {filteredBooks.length === 0 ? (
                 <p style={{ textAlign: "center" }}>No books available</p>
               ) : (
-                filteredBookList.map((book) => (
+                filteredBooks.map((book) => (
                   <StyledTableRow key={book.id}>
                     <StyledTableCell component="th" scope="row">
                       {book.name}
