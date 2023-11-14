@@ -16,14 +16,14 @@ const LandingPage = () => {
       async (res) => {
         const result = await res.json();
         setBorrowedBooks(result.checkedBookDTOs);
-        // console.log(result.checkedBookDTOs);
+        console.log(result.checkedBookDTOs);
       }
     );
   }, [userId]);
 
-  const returnQuantityChangeHandler = (value, book) => {
+  const returnQuantityChangeHandler = (transactionUUID, value, book) => {
     const bookIndex = returningBooks.findIndex(
-      (existingBook) => existingBook.bookId === book.id
+      (existingBook) => existingBook.transactionUUID === transactionUUID
     );
     let currentBooks = returningBooks;
     if (bookIndex !== -1) {
@@ -31,7 +31,11 @@ const LandingPage = () => {
       updatedBook.returnedQuantity = +value;
       currentBooks[bookIndex] = updatedBook;
     } else {
-      currentBooks.push({ bookId: book.id, returnedQuantity: +value });
+      currentBooks.push({
+        transactionUUID: transactionUUID,
+        bookId: book.id,
+        returnedQuantity: +value,
+      });
     }
     setReturningBooks(currentBooks);
     console.log(returningBooks);
@@ -68,7 +72,7 @@ const LandingPage = () => {
         <tbody>
           {borrowedBooks.map((bookDetail) => {
             return (
-              <tr key={bookDetail.libraryBook.id}>
+              <tr key={bookDetail.transactionUUID}>
                 <td>{bookDetail.libraryBook.name}</td>
                 <td>
                   {bookDetail.libraryBook.authors.map((author) => (
@@ -91,7 +95,13 @@ const LandingPage = () => {
                         (book) => book.bookId === bookDetail.libraryBook.id
                       )?.returnedQuantity
                     }
-                    onChange={returnQuantityChangeHandler}
+                    onChange={(value, book) =>
+                      returnQuantityChangeHandler(
+                        bookDetail.transactionUUID,
+                        value,
+                        book
+                      )
+                    }
                     max={bookDetail.quantity}
                   />
                 </td>
